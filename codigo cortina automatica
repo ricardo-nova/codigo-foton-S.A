@@ -1,0 +1,60 @@
+int LDR = 0;
+int ValorLDR = 0;
+int PinMotor1 = 5;
+int PinMotor2 = 6;
+int ActivarPuente = 7;
+int CortinaCerrada = 13;
+int CortinaAbierta = 12;
+bool id=false;
+bool id2=false;
+void setup()
+{
+   
+   pinMode(PinMotor1, OUTPUT);
+   pinMode(PinMotor2, OUTPUT);
+   digitalWrite(ActivarPuente, HIGH);
+}
+
+void loop()
+{
+  ValorLDR = analogRead(LDR);
+    
+    if(ValorLDR >= 1010)
+    {
+      if(digitalRead(CortinaAbierta) == LOW && !id)
+         {
+        id2=false;
+          digitalWrite(PinMotor1, LOW);
+          digitalWrite(PinMotor2, HIGH);
+        delay(1000);
+          digitalWrite(PinMotor2, LOW);
+        Serial.println("listo");
+        id=true;
+         }
+    else
+         {
+          digitalWrite(PinMotor1, LOW);
+          digitalWrite(PinMotor2, LOW);
+
+         }
+    }
+    else
+    {
+      if(digitalRead(CortinaCerrada) == LOW && !id2)
+         {
+        id=false;
+          digitalWrite(PinMotor1, HIGH);
+          digitalWrite(PinMotor2, LOW);
+        delay(1000);
+          digitalWrite(PinMotor1, LOW);
+        id2=true;
+       
+         }
+      else
+         {
+          digitalWrite(PinMotor1, LOW);
+          digitalWrite(PinMotor2, LOW);
+         
+         }
+    }
+}
